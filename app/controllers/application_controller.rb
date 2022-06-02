@@ -2,41 +2,27 @@ class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
   
   # Add your routes here
-  get "/categories" do
+  get '/categories' do
     categories = Category.all
-
     categories.to_json
   end
 
-  get "/todos" do
-    todos = Todo.all
-
-    todos.to_json
+  get '/categories/:id' do
+    Category.find(params[:id]).to_json
   end
 
-  post '/todos' do
-    # create a new equipment in the database
-    # params is a hash of key-value pairs coming from the body of the request
-    todo = Todo.create(
-      text:         params[:text],
-      category_id:  params[:category_id],
+  post '/categories' do 
+    category = Category.create(
+      name: params[:name]
     )
-
-    # send back a response with the created equipment as JSON
-    todo.to_json
+    category.to_json
   end
 
-
-  patch '/todos/:id' do
-    # find the equipment using the ID
-    todo = Todo.find(params[:id])
-
-    todo.update(
-      text:         params[:text],
-      category_id: params[:category_id]
-    )
-
-    # send back the updated equipment as JSON
-    todo.to_json
+  delete '/categories/:id' do
+    category = Category.find(params[:id])
+    category.destroy
+    category.to_json
   end
+
+  
 end
