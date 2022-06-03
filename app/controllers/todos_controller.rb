@@ -1,7 +1,7 @@
 class TodosController < ApplicationController
 
   get '/todos' do
-    todos = Todo.all
+    todos = Todo.todos_and_category
 
     todos.to_json
   end
@@ -21,7 +21,7 @@ class TodosController < ApplicationController
 
   patch '/todos/:id' do
     todo = Todo.find(params[:id])
-
+    binding.pry
     todo.update(
       text:         params[:text],
       category_id: params[:category_id]
