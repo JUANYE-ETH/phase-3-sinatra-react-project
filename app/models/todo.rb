@@ -16,4 +16,14 @@ class Todo < ActiveRecord::Base
     def self.filter_todos(category)
         Todo.all.where(category_id: category)
     end
+
+    def self.todos_and_category
+        self.all.map do |todo|
+        {
+            id: todo.id,
+            text: todo.text,
+            category: todo.category
+        }
+        end
+    end
 end
